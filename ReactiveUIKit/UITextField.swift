@@ -50,7 +50,7 @@ extension UITextField {
       }
       
       self.rControlEvent
-        .filter { $0 == UIControlEvents.EditingChanged }
+        .filter { $0 == UIControlEvents.AllEditingEvents }
         .observe(on: ImmediateOnMainExecutionContext) { [weak self] event in
           guard let unwrappedSelf = self else { return }
           updatingFromSelf = true
@@ -78,7 +78,7 @@ extension UITextField {
       }
       
       self.rControlEvent
-        .filter { $0 == UIControlEvents.EditingChanged }
+        .filter { $0 == UIControlEvents.AllEditingEvents }
         .observe(on: ImmediateOnMainExecutionContext) { [weak self] event in
           guard let unwrappedSelf = self else { return }
           updatingFromSelf = true
