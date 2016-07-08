@@ -53,11 +53,14 @@ extension UITextField {
         .filter { $0 == UIControlEvents.AllEditingEvents }
         .observe(on: ImmediateOnMainExecutionContext) { [weak self] event in
           guard let unwrappedSelf = self else { return }
-          updatingFromSelf = true
-          unwrappedSelf.rText.value = unwrappedSelf.text
-          updatingFromSelf = false
-        }
-      
+          // only send to rText if value changed, as .AllEditingEvents reports more than just changes
+          if unwrappedSelf.rText.value != unwrappedSelf.text {
+            updatingFromSelf = true
+            unwrappedSelf.rText.value = unwrappedSelf.text
+            updatingFromSelf = false
+          }
+        }.disposeIn(rBag)
+
       return rText
     }
   }
@@ -81,11 +84,14 @@ extension UITextField {
         .filter { $0 == UIControlEvents.AllEditingEvents }
         .observe(on: ImmediateOnMainExecutionContext) { [weak self] event in
           guard let unwrappedSelf = self else { return }
-          updatingFromSelf = true
-          unwrappedSelf.rAttributedText.value = unwrappedSelf.attributedText
-          updatingFromSelf = false
-        }
-      
+          // only sent to rAttributedText if value changed, as .AllEditingEvents reports more than just changes
+          if unwrappedSelf.rAttributedText.value != unwrappedSelf.attributedText {
+            updatingFromSelf = true
+            unwrappedSelf.rAttributedText.value = unwrappedSelf.attributedText
+            updatingFromSelf = false
+          }
+        }.disposeIn(rBag)
+
       return rAttributedText
     }
   }
