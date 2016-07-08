@@ -49,6 +49,7 @@ import ReactiveFoundation
     control.addTarget(self, action: Selector("eventHandlerEditingChanged"), forControlEvents: UIControlEvents.EditingChanged)
     control.addTarget(self, action: Selector("eventHandlerEditingDidEnd"), forControlEvents: UIControlEvents.EditingDidEnd)
     control.addTarget(self, action: Selector("eventHandlerEditingDidEndOnExit"), forControlEvents: UIControlEvents.EditingDidEndOnExit)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerAllEditingEvents), forControlEvents: UIControlEvents.AllEditingEvents)
   }
   
   func eventHandlerTouchDown() {
@@ -105,6 +106,10 @@ import ReactiveFoundation
   
   func eventHandlerEditingDidEndOnExit() {
     observer(.EditingDidEndOnExit)
+  }
+
+  func eventHandlerAllEditingEvents() {
+    observer(.AllEditingEvents)
   }
   
   deinit {
